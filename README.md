@@ -1,4 +1,3 @@
-##Perth Fuel Prices
 
 |                   |                                                        |
 |:------------------|:-------------------------------------------------------|
@@ -13,8 +12,9 @@ This application enables users to monitor fuel prices in the [Perth](http://en.w
 
 Users specify the date range and fuel product of interest in the sidebar on the lefthand side of the application. The mean daily fuel price is automatically plotted. Summary statistics and retailers selling the specified fuel product at the maximum and minimum price recorded for that period are listed.
 
-
 The cost of the specified petrol product is shown in blue for the specified date range. The beginning of the fuel cycle for many products is Wednesday, with each Wednesday identified using a vertical dashed red line.
+
+When you first load this app in your browser, loading data can initially take several seconds. Please be patient. Subsequent queries should proceed quickly.
 
 ### User Interface
 
@@ -30,6 +30,7 @@ The user also specifies the fuel product using a Shiny [select input widget](htt
 |**Diesel**  | [Diesel fuel](http://en.wikipedia.org/wiki/Diesel_fuel)
 |**LPG**     | [Liquid Petroleum Gas](http://en.wikipedia.org/wiki/Liquefied_petroleum_gas)
 
+
 Further information about Fuel Product choices are available on the [Fuel Watch web site](http://www.fuelwatch.wa.gov.au/fuelwatch/pages/public/contentholder.jspx?key=fuelTypes.html)
 
 ### Data
@@ -40,6 +41,7 @@ The dataset includes daily petrol prices for Western Australian petrol stations,
 
 ### Suggested Uses
 Set the date range over the course of the entire calendar year for 2014 to see overall trends for the year.
+
 
 Set the date range for short periods like one month or less to identify petrol station that tend to sell at low or maximum prices.
 
