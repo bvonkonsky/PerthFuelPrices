@@ -6,6 +6,7 @@
 #
 
 library(shiny) 
+library(markdown)
 
 # minDate and maxData are specified in globalR so they are visible in both
 # ur.R and global.R .
