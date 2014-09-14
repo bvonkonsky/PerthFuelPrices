@@ -43,7 +43,15 @@ shinyUI(fluidPage(
      helpText("Data used in this applicaton was downloaded from the 
               Western Australia Department of Commerce", 
               a("Fuel Watch ", href="http://www.fuelwatch.wa.gov.au/fuelwatch/pages/public/historicalFileDownloadRetail.jspx"),
-              "web site.")
+              "web site."),
+     
+     helpText("This app was create by", 
+              a("Brian von Konsky", href="https://www.coursera.org/user/i/493e185e6b3fa8d9de5cd3aa6227e091"),
+              "in partial fullfilment of the requirements for the Coursera ", 
+              a("Developing Data Products", href="https://www.coursera.org/course/devdataprod"), 
+              "course."),
+     
+     helpText("See", a("README", href="https://github.com/bvonkonsky/PerthFuelPrices/blob/master/README.md"), "for help and further information.")
     
     ),
 
