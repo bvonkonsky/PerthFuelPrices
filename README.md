@@ -16,13 +16,13 @@ The cost of the specified petrol product is shown in blue for the specified date
 
 When you first load this app in your browser, loading data can initially take several seconds. Please be patient. Subsequent queries should proceed quickly.
 
-### User Interface
+### User Interface 
 
 The period of interest is specified by the user in the convenient Shiny [Date Range widget](http://shiny.rstudio.com/gallery/date-and-date-range.html).  The beginning and ending dates of the reporting period are specified on the lefthand and righthand side of the date range widget, respectively. Dates are entered in YYYY-MM-DD format, or specified by clicking on the desired dates in the drop down calendars. Data from 2014 are currently available in the app. Data from other years are not currently available in this app.
 
 The user also specifies the fuel product using a Shiny [select input widget](http://shiny.rstudio.com/reference/shiny/latest/selectInput.html).  Fuel product choices are listed in the table below:
 
-|Product     |Desription          |
+|Product     |Description          |
 |:-----------|:-------------------|
 |**ULP**     | Unleaded Petrol
 |**PULP**    | Premium Unleaded Petrol
@@ -33,11 +33,14 @@ The user also specifies the fuel product using a Shiny [select input widget](htt
 
 Further information about Fuel Product choices are available on the [Fuel Watch web site](http://www.fuelwatch.wa.gov.au/fuelwatch/pages/public/contentholder.jspx?key=fuelTypes.html)
 
+Further information about Fuel Product choices are available on the [Fuel Watch web site](http://www.fuelwatch.wa.gov.au/fuelwatch/pages/public/contentholder.jspx?key=fuelTypes.html)
+
 Tabs in the interface display the following:
+
 | Tab        |  Description       |
 |:-----------|:-------------------|
 | Plot       | Plots mean daily fuel price for selected product in the specified date range
-| Summary    | Summarizes the fuel price in Australian Dollers per Litre
+| Summary    | Summarizes the fuel price in Australian Dollars per Litre
 | Retailers  | Retailers selling fuel at the maximum and minimum prices during the specified period
 | Help       | This information file to assist users in using the application
 
@@ -54,3 +57,4 @@ Set the date range over the course of the entire calendar year for 2014 to see o
 Set the date range for short periods like one month or less to identify petrol station that tend to sell at low or maximum prices.
 
 Notice that although mean daily price for some products is lower on Wednesdays for ULP, PULP, and 98 RON, this is not the case for Diesel and LPG. Also note that mean daily price is lower on Wednesdays for ULP, PULP, and 98 RON, there are some retailers who occasionally sell at lower prices on weekends.
+
