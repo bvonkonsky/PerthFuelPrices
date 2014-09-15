@@ -1,0 +1,138 @@
+Perth Fuel Prices
+========================================================
+author: Brian von Konsky
+date: 15 September, 2014
+
+A project in partial fullfuliment of the requirements for:
+
+***Building Data Products***</br>
+***Coursera Data Science Specialization***
+
+Overview
+========================================================
+
+Cycles in the cost of fuel are apparent in many areas of Australian, including
+the State of Western Australia
+
+- Marketing strategy on the part of fuel companies
+- Cycle conincides with Australian "payday" on Thursdays
+- Prices reported to the Department of Commerce daily
+- Data made available on the [Fuel Watch](http://www.fuelwatch.wa.gov.au/) website
+- Investigate the price cycle and identify cheap and expensive retailers in the 
+  [Perth](en.wikipedia.org/wiki/Perth) Metropolitan area on the
+  [Web App](https://bvonkonsky.shinyapps.io/PerthFuelPrices) built for this assignment!
+
+```{r echo=FALSE}
+# A list of CSV files for months from January to September 2014
+
+files <- c (
+  "FuelWatchRetail-01-2014.csv",
+  "FuelWatchRetail-02-2014.csv",
+  "FuelWatchRetail-03-2014.csv",
+  "FuelWatchRetail-04-2014.csv",
+  "FuelWatchRetail-05-2014.csv",
+  "FuelWatchRetail-06-2014.csv",
+  "FuelWatchRetail-07-2014.csv",
+  "FuelWatchRetail-08-2014.csv",
+  "FuelWatchRetail-09-2014.csv"
+)
+
+# CSV files are stored in the following directory
+directory <- "data"
+
+# Read individual CSV files
+getData <- function(filename) {
+  
+  # Read historical data previously downloaded from 
+  # http://www.fuelwatch.wa.gov.au/fuelwatch/pages/public/historicalFileDownloadRetail.jspx
+  path.data <- file.path(directory, filename)
+  df <- read.csv(path.data, header=TRUE)
+  
+  # Exclude postcodes note in the Perth Metro area as identified at
+  # https://www.immi.gov.au/skilled/general-skilled-migration/regional-growth.htm
+  df <- df[!( (df$POSTCODE >= 6041 & df$POSTCODE<=6044) | 
+                (df$POSTCODE >= 6083 & df$POSTCODE<=6084) |
+                (df$POSTCODE >= 6121 & df$POSTCODE<=6126) | 
+                (df$POSTCODE >= 6200 & df$POSTCODE<=6799) |
+                (df$POSTCODE == 6161) ),]
+  
+  # Specify dates in Austalian format, which is dd/mm/yy
+  df$PUBLISH_DATE <- as.Date(df$PUBLISH_DATE, format="%d/%m/%Y")
+  
+  # Return the data frame
+  return(df)
+}
+
+# Plot the time series showing mean daily fuel prices for the date range
+# and fuel product specifed as parameters
+timeSeries <- function (df, date1, date2, product) {
+  title <- paste("Daily Mean Perth Metro", product, "Cost From", date1, 'to', date2)
+  plot(aggregate(PRODUCT_PRICE ~ PUBLISH_DATE,
+                 df[df$PRODUCT_DESCRIPTION==product & 
+                      df$PUBLISH_DATE >= date1 & 
+                      df$PUBLISH_DATE <= date2,], mean), type="l", col="blue",
+       main=title, xlab="Date", ylab="AU Cents / Litre")
+  
+  # Draw dashed red lines on each Wednesday in the date range
+  dates <- seq(date1, date2, "days")
+  wednesdays <- dates[weekdays(dates) %in% "Wednesday"]
+  abline(v=wednesdays, col="red", lty=2)
+}
+
+# Truncate the dates to fall within the period covered by these files.
+validateDate <- function (theDate) {
+  validated <- theDate
+  if (validated < minDate)
+    validated <- minDate
+  else if (validated > maxDate)
+    validated <- maxDate
+  return(validated)
+}
+
+df <- do.call(rbind, lapply(files, getData))
+```
+The User Interface
+========================================================
+Specify the range of dates in the app's User Interface.
+```{r echo=FALSE}
+date1 <- as.Date("2014-01-01")
+date2 <- as.Date("2014-12-31")
+```
+
+Also specify the choice of Fuel Product to be investigated: 
+- ***ULP*** - Unleaded Petrol
+- ***PULP*** - Premium Unleaded Petrol
+- ***98 Ron*** - Research Octane Number 98
+- ***Deisel*** - Deisel Fuel
+- ***LPG*** - Liquid Petroleum Gas
+
+```{r echo=FALSE}
+product <- "ULP"
+```
+
+ULP Prices for January-September 2014
+========================================================
+```{r  echo=FALSE, fig.align='center', fig.width=11}
+timeSeries (df, date1, date2, product)
+```
+</br>Dashed red lines show Wednesdays
+March 2014 ULP Data (AU Cents/Litre)
+========================================================
+```{r echo=FALSE, width=80}
+date1 <- as.Date("2014-03-01")
+date2 <- as.Date("2014-03-31")
+period <- df[df$PRODUCT_DESCRIPTION==product &
+                   df$PUBLISH_DATE >= date1 &
+                   df$PUBLISH_DATE <= date2,]
+    summary(period$PRODUCT_PRICE)
+
+maxPrice = max(period$PRODUCT_PRICE)
+minPrice = min(period$PRODUCT_PRICE)
+maxObs <- period[period$PRODUCT_PRICE==maxPrice,]
+minObs <- period[period$PRODUCT_PRICE==minPrice,]
+
+cat(paste("Retailers selling at maximum price of",  maxPrice))
+cat(paste(maxObs$BRAND_DESCRIPTION, maxObs$ADDRESS, maxObs$LOCATION, "on", maxObs$weekday, maxObs$PUBLISH_DATE,"\n"))
+cat(paste("Retailers selling at minimum price of",  minPrice))
+cat(paste(minObs$BRAND_DESCRIPTION, minObs$ADDRESS, minObs$LOCATION, "on", minObs$weekday, minObs$PUBLISH_DATE, "\n"))
+```

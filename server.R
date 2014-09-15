@@ -36,9 +36,6 @@ getData <- function(filename) {
   path.data <- file.path(directory, filename)
   df <- read.csv(path.data, header=TRUE)
   
-  # Drop the extraneous column
-  df$X <- NULL
-  
   # Exclude postcodes note in the Perth Metro area as identified at
   # https://www.immi.gov.au/skilled/general-skilled-migration/regional-growth.htm
   df <- df[!( (df$POSTCODE >= 6041 & df$POSTCODE<=6044) | 
@@ -49,9 +46,6 @@ getData <- function(filename) {
   
   # Specify dates in Austalian format, which is dd/mm/yy
   df$PUBLISH_DATE <- as.Date(df$PUBLISH_DATE, format="%d/%m/%Y")
-  
-  # Get a factor variable designating the day of the week for each observation
-  df$weekday      <- as.factor(weekdays (as.Date(df$PUBLISH_DATE)))
   
   # Return the data frame
   return(df)
@@ -84,10 +78,6 @@ validateDate <- function (theDate) {
 }
 
 df <- do.call(rbind, lapply(files, getData))
-
-report <- function(label, brand, address, location, price) {
-  paste(label, br)
-}
 
 shinyServer(function(input, output) {
 

@@ -22,7 +22,7 @@ The period of interest is specified by the user in the convenient Shiny [Date Ra
 
 The user also specifies the fuel product using a Shiny [select input widget](http://shiny.rstudio.com/reference/shiny/latest/selectInput.html).  Fuel product choices are listed in the table below:
 
-|            |                    |
+|Product     |Desription          |
 |:-----------|:-------------------|
 |**ULP**     | Unleaded Petrol
 |**PULP**    | Premium Unleaded Petrol
@@ -32,6 +32,14 @@ The user also specifies the fuel product using a Shiny [select input widget](htt
 
 
 Further information about Fuel Product choices are available on the [Fuel Watch web site](http://www.fuelwatch.wa.gov.au/fuelwatch/pages/public/contentholder.jspx?key=fuelTypes.html)
+
+Tabs in the interface display the following:
+| Tab        |  Description       |
+|:-----------|:-------------------|
+| Plot       | Plots mean daily fuel price for selected product in the specified date range
+| Summary    | Summarizes the fuel price in Australian Dollers per Litre
+| Retailers  | Retailers selling fuel at the maximum and minimum prices during the specified period
+| Help       | This information file to assist users in using the application
 
 ### Data
 
